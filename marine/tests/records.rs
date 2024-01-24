@@ -27,11 +27,11 @@ use std::path::PathBuf;
 pub fn records() {
     let records_config_path = "../examples/records/Config.toml";
 
-    let records_config_raw = std::fs::read(records_config_path)
-        .expect("../examples/records/Config.toml should presence");
+    let records_config_raw = std::fs::read_to_string(records_config_path)
+        .expect("../examples/records/Config.toml should exist");
 
     let mut records_config: marine::TomlMarineConfig =
-        toml::from_slice(&records_config_raw).expect("records config should be well-formed");
+        toml::from_str(&records_config_raw).expect("records config should be well-formed");
     records_config.modules_dir = Some(PathBuf::from("../examples/records/artifacts/"));
 
     let mut marine = Marine::with_raw_config(records_config)
@@ -161,11 +161,12 @@ pub fn records() {
 
 #[test]
 fn records_passing() {
-    let inner_records_config_raw = std::fs::read("./tests/wasm_tests/records_passing/Config.toml")
-        .expect("./tests/wasm_tests/records_passing/Config.toml should presence");
+    let inner_records_config_raw =
+        std::fs::read_to_string("./tests/wasm_tests/records_passing/Config.toml")
+            .expect("./tests/wasm_tests/records_passing/Config.toml should exist");
 
     let mut records_passing_config: marine::TomlMarineConfig =
-        toml::from_slice(&inner_records_config_raw)
+        toml::from_str(&inner_records_config_raw)
             .expect("argument passing test config should be well-formed");
 
     records_passing_config.modules_dir = Some(PathBuf::from(
@@ -222,11 +223,12 @@ fn records_passing() {
 
 #[test]
 fn records_destruction() {
-    let inner_records_config_raw = std::fs::read("./tests/wasm_tests/records_passing/Config.toml")
-        .expect("./tests/wasm_tests/records_passing/Config.toml should presence");
+    let inner_records_config_raw =
+        std::fs::read_to_string("./tests/wasm_tests/records_passing/Config.toml")
+            .expect("./tests/wasm_tests/records_passing/Config.toml should exist");
 
     let mut records_passing_config: marine::TomlMarineConfig =
-        toml::from_slice(&inner_records_config_raw)
+        toml::from_str(&inner_records_config_raw)
             .expect("argument passing test config should be well-formed");
 
     records_passing_config.modules_dir = Some(PathBuf::from(
@@ -277,11 +279,12 @@ fn records_destruction() {
 
 #[test]
 fn records_return_frees() {
-    let inner_records_config_raw = std::fs::read("./tests/wasm_tests/records_passing/Config.toml")
-        .expect("./tests/wasm_tests/records_passing/Config.toml should presence");
+    let inner_records_config_raw =
+        std::fs::read_to_string("./tests/wasm_tests/records_passing/Config.toml")
+            .expect("./tests/wasm_tests/records_passing/Config.toml should exist");
 
     let mut records_passing_config: marine::TomlMarineConfig =
-        toml::from_slice(&inner_records_config_raw)
+        toml::from_str(&inner_records_config_raw)
             .expect("argument passing test config should be well-formed");
 
     records_passing_config.modules_dir = Some(PathBuf::from(

@@ -27,11 +27,11 @@ use std::sync::Arc;
 pub fn greeting() {
     let greeting_config_path = "../examples/greeting/Config.toml";
 
-    let greeting_config_raw = std::fs::read(greeting_config_path)
-        .expect("../examples/greeting/Config.toml should presence");
+    let greeting_config_raw = std::fs::read_to_string(greeting_config_path)
+        .expect("../examples/greeting/Config.toml should exist");
 
     let mut greeting_config: marine::TomlMarineConfig =
-        toml::from_slice(&greeting_config_raw).expect("greeting config should be well-formed");
+        toml::from_str(&greeting_config_raw).expect("greeting config should be well-formed");
     greeting_config.modules_dir = Some(PathBuf::from("../examples/greeting/artifacts"));
 
     let mut faas = Marine::with_raw_config(greeting_config)
@@ -63,11 +63,12 @@ pub fn greeting() {
 pub fn get_interfaces() {
     let greeting_config_path = "../examples/greeting/Config.toml";
 
-    let greeting_config_raw = std::fs::read(greeting_config_path)
+    let greeting_config_raw = std::fs::read_to_string(greeting_config_path)
         .expect("../examples/greeting/Config.toml should presence");
 
     let mut greeting_config: marine::TomlMarineConfig =
-        toml::from_slice(&greeting_config_raw).expect("greeting config should be well-formed");
+        toml::from_str(&greeting_config_raw).expect("greeting config should be well-formed");
+
     greeting_config.modules_dir = Some(PathBuf::from("../examples/greeting/artifacts"));
 
     let faas = Marine::with_raw_config(greeting_config)

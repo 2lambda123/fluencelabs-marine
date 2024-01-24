@@ -81,11 +81,11 @@ impl TomlMarineConfig {
             ))
         })?;
 
-        let file_content = std::fs::read(&path).map_err(|e| {
+        let file_content = std::fs::read_to_string(&path).map_err(|e| {
             MarineError::IOError(format!("failed to load {}: {}", path.display(), e))
         })?;
 
-        let mut config: TomlMarineConfig = toml::from_slice(&file_content)?;
+        let mut config: TomlMarineConfig = toml::from_str(&file_content)?;
 
         let default_base_path = Path::new("/");
         config.base_path = path
